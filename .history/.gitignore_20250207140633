@@ -1,0 +1,6 @@
+stage1.ckpt
+stage2.ckpt
+BraTS_Training_Data/
+BraTS_Validation_Data/
+stage*
+*.tar

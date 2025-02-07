@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class SPADE(nn.Module):
+    "根据正常归一化后的结果去计算对呀的β和μ从而进行仿射变换"
     def __init__(self, norm_nc, label_nc, kernel_size=3, norm_type='instance'):
         super().__init__()
 
@@ -28,7 +29,7 @@ class SPADE(nn.Module):
     def forward(self, x):
         normalized = self.param_free_norm(x)
 
-        x = F.interpolate(x, size=x.size()[2:], mode='nearest')
+        x = F.interpolate(x, size=x.size()[2:], mode='nearest')#没用？
         actv = self.mlp_shared(x)
         gamma = self.mlp_gamma(actv)
         beta = self.mlp_beta(actv)
@@ -40,6 +41,7 @@ class SPADE(nn.Module):
     
 class SPADE_Multimodal(nn.Module):
     def __init__(self, modalities, norm_nc, label_nc, kernel_size, norm_type='instance'):
+        """label_nc是SPADE的输入ch数,norm_nc是输出channel数,默认是一样的"""
         super().__init__()
         self.spades = nn.ModuleDict({modality: SPADE(norm_nc, label_nc, kernel_size, norm_type) for modality in modalities})
 

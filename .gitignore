@@ -4,3 +4,13 @@ BraTS_Training_Data/
 BraTS_Validation_Data/
 stage*
 *.tar
+BraTS2021_*
+CLIP-main/
+taming-transformers-master/
+slurm*
+LDM/logs/
+VQ-GAN/logs/
+**/logs/
+**/samples/
+LDM/outputs/
+=*
